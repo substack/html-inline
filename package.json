@@ -1,6 +1,6 @@
 {
   "name": "html-inline",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "inline javascript, stylehseets, and images from an html page",
   "main": "index.js",
   "bin": {
