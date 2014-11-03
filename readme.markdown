@@ -2,6 +2,8 @@
 
 inline javascript, stylesheets, and images from an html page
 
+[![build status](https://secure.travis-ci.org/substack/html-inline.png)](http://travis-ci.org/substack/html-inline)
+
 # example
 
 input file:
