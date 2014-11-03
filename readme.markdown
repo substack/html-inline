@@ -1,6 +1,6 @@
 # html-inline
 
-Inline javascript, stylesheets, and images from an html page.
+inline javascript, stylesheets, and images from an html page
 
 # example
 
