@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "inline javascript, stylehseets, and images from an html page",
   "main": "index.js",
+  "bin": {
+    "html-inline": "bin/cmd.js"
+  },
   "dependencies": {
     "minimist": "~1.1.0",
     "through2": "~0.6.3",
