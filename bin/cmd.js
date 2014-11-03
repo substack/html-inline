@@ -6,9 +6,12 @@ var path = require('path');
 var minimist = require('minimist');
 
 var argv = minimist(process.argv.slice(2), {
-    alias: { i: 'infile', o: 'outfile', b: 'basedir' },
+    alias: { i: 'infile', o: 'outfile', b: 'basedir', h: 'help' },
     default: { outfile: '-' }
 });
+
+if (argv.help) return usage(0);
+
 var infile = argv.infile || argv._[0];
 if (!argv.basedir && infile) {
     argv.basedir = path.resolve(path.dirname(infile));
@@ -23,3 +26,11 @@ var output = argv.outfile === '-'
     : fs.createWriteStream(argv.outfile)
 ;
 input.pipe(inline).pipe(output);
+
+function usage (code) {
+    var r = fs.createReadStream(__dirname +'/usage.txt');
+    r.pipe(process.stdout);
+    r.on('end', function () {
+        if (code) process.exit(code);
+    });
+}
