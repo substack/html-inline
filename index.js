@@ -31,12 +31,29 @@ module.exports = function (opts) {
             var ext = path.extname(file).replace(/^\./, '');;
             w.write(' src="data:image/' + ext + ';base64,');
             fs.createReadStream(file).pipe(through(write, end));
-
+            
+            var bytes = 0, last = null;
+            
             function write (buf, enc, next) {
-                w.write(buf.toString('base64'));
+                if (last) {
+                    buf = Buffer.concat([ last, buf ]);
+                    last = null;
+                }
+                
+                var b;
+                if (buf.length % 3 === 0) {
+                    b = buf;
+                }
+                else {
+                    b = buf.slice(0, buf.length - buf.length % 3);
+                    last = buf.slice(buf.length - buf.length % 3);
+                }
+                w.write(b.toString('base64'));
+                
                 next();
             }
             function end () {
+                if (last) w.write(last.toString('base64'));
                 w.end('">');
             }
         });
