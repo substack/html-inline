@@ -29,6 +29,12 @@ module.exports = function (opts) {
                 w.write(' ' + key + '="' + enc(attrs[key]) + '"');
             });
             var ext = path.extname(file).replace(/^\./, '');;
+
+            // Adjust mime type for SVG images.
+            if (ext === 'svg') {
+                ext += '+xml';
+            } 
+
             w.write(' src="data:image/' + ext + ';base64,');
             fs.createReadStream(file).pipe(through(write, end));
             
