@@ -7,15 +7,21 @@
     "html-inline": "bin/cmd.js"
   },
   "dependencies": {
-    "minimist": "~1.1.0",
-    "through2": "~0.6.3",
-    "trumpet": "~1.7.0"
+    "escape-html": "^1.0.3",
+    "got": "^4.1.1",
+    "is-absolute-url": "^2.0.0",
+    "minimist": "^1.2.0",
+    "trumpet": "^1.7.1"
   },
   "devDependencies": {
-    "tape": "^3.0.0",
-    "concat-stream": "~1.4.6"
+    "concat-stream": "~1.4.6",
+    "html-minifier": "^0.7.2",
+    "opn-cli": "^1.0.0",
+    "tape": "^3.0.0"
   },
   "scripts": {
+    "example": "node ./bin/cmd.js example/index.html > example/inline.html && opn example/inline.html",
+    "example:minify": "html-minifier example/inline.html --remove-comments --collapse-whitespace > example/inline.min.html && opn example/inline.min.html",
     "test": "tape test/*.js"
   },
   "repository": {

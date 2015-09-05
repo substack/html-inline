@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome Inliner</title>
+    <link rel="icon" href="favicon.ico">
+    <style>html,body{height:100%}</style>
+    <style>/*
+
+   CLEARFIX
+
+*/
+
+/* Nicolas Gallaghers Clearfix solution
+   Ref: http://nicolasgallagher.com/micro-clearfix-hack/ */
+
+.cf:before,
+.cf:after { content: " "; display: table; }
+.cf:after { clear: both; }
+.cf {       *zoom: 1; }
+
+</style>
+    <style>.foo {
+  color: red;
+}</style>
+    <style>.bar {
+  background: green;
+}</style>
+    <style>
+    .qux {
+      font-size: 16px;
+    }
+    </style>
+    <!-- comment -->
+    <script>console.log('scripts/foo.js')
+</script>
+    <script>console.log('scripts/bar.js')
+</script>
+    <script>!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var n;n="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,n.dush=e()}}(function(){return function e(n,t,r){function o(f,u){if(!t[f]){if(!n[f]){var c="function"==typeof require&&require;if(!u&&c)return c(f,!0);if(i)return i(f,!0);var d=new Error("Cannot find module '"+f+"'");throw d.code="MODULE_NOT_FOUND",d}var l=t[f]={exports:{}};n[f][0].call(l.exports,function(e){var t=n[f][1][e];return o(t?t:e)},l,l.exports,e,n,t,r)}return t[f].exports}for(var i="function"==typeof require&&require,f=0;f<r.length;f++)o(r[f]);return o}({1:[function(e,n,t){"use strict";function r(e){return this instanceof r?(e=e||this,e._e=e._e||{},e._d=function(e){return e=u.toString.call(e),/(?:HTML)?(?:.*)Element/gi.test(e)},e.on=function(n,t,r,f){return e._e[n]=e._e[n]||[],e._e[n].push(t),r&&e._d(r)&&(t[o]=r[o],f=r["add"+i],f?r["add"+i](n,t,0):r.attachEvent("on"+n,t)),e},e.off=function(n,t,r,o){return c.call(e._e,n)?(e._e[n].splice(e._e[n].indexOf(t),1),r&&e._d(r)&&(o=r["remove"+i],o?r["remove"+i](n,t,0):r.detachEvent("on"+n,t)),e):e},e.once=function(n,t,r){function o(){return e.off(n,o,r),t.apply(r,arguments)}return e.on(n,o,r)},void(e.emit=function(n,t,r,i,f,u){if(!c.call(e._e,n))return e;for(t=[].slice.call(arguments,1),r=t[t.length-1],u=e._d(r),r=u?r:e,t=u?t.slice(0,-1):t,i=0;i<e._e[n].length;i++)f=e._e[n][i],u&&f[o]!==r[o]||f.apply(r,t);return e})):new r(e)}var o="outerHTML",i="EventListener",f="prototype",u=Object[f],c=u.hasOwnProperty;n.exports=r,r.mixin=function(e,n,t,o,i){n=n||r,t=e.constructor;for(o in n)t[o]=n[o];t[f]=Object.create(n[f]);for(i in e)t[f][i]=e[i];return t.__super__=f[f],t}},{}]},{},[1])(1)});</script>
+  </head>
+  <body>
+    <h1>Welcome Example</h1>
+    <img src="foo.png">
+    <h2>markup/lorem.html</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <img src="https://cdn.rawgit.com/sindresorhus/hasha/master/media/logo.png">
+    <p>foo bar baz AVA LOGO below</p>
+    <img src="//cdn.rawgit.com/sindresorhus/ava/master/media/logo.png">
+    <h5>Footer Import</h5>
+  </body>
+</html>

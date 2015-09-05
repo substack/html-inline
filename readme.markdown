@@ -45,18 +45,19 @@ $ html-inline index.html
 # usage
 
 ```
-html-inline {-i INFILE -o OUTFILE -b BASEDIR}
+html-inline {-i INFILE -o OUTFILE -c BASEDIR}
 
   Read an html file from INFILE to produce OUTFILE, inlining stylesheets, script
-  tags, and images relative to BASEDIR.
+  tags, html imports and images relative to current working directory (BASEDIR).
 
-  -i File to read. Default: STDIN.
-  -o File to write. Default: STDOUT.
-  -b Directory to resolve paths from. Default: $PWD.
+  -i, --infile     File to read. Default: STDIN.
+  -o, --outfile    File to write. Default: STDOUT.
+  -c, --cwd        Directory to resolve paths from. Default: process.cwd.
 
-  --ignore-images Don't inline images. Default: false
-  --ignore-scripts Don't inline JavaScript. Default: false
-  --ignore-styles Don't inline CSS. Default: false
+  -I, --images        Inline images. Default: true
+  -H, --imports       Inline HTML imports. Default: true
+  -J, --scripts       Inline JavaScript. Default: true
+  -S, --styles        Inline CSS. Default: true
 ```
 
 # methods
@@ -71,9 +72,9 @@ Create a transform stream `inline` that expects html as input and produces html
 with inline assets as output.
 
 Paths to scripts, stylesheets, and images are
-resolved relative to `opts.basedir`.
+resolved relative to `opts.cwd`.
 
-You can disable asset inlining by passing `true` for `opts.ignoreImages`, `opts.ignoreScripts` or `opts.ignoreStyles`.
+You can disable asset inlining by passing `false` for `opts.images`, `opts.imports`, `opts.scripts` or `opts.styles`.
 
 # install
 

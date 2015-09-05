@@ -1,87 +1,75 @@
-var trumpet = require('trumpet');
-var through = require('through2');
-var fs = require('fs');
-var path = require('path');
+'use strict'
 
-module.exports = function (opts) {
-    if (!opts) opts = {};
-    var basedir = opts.basedir || process.cwd();
-    var tr = trumpet();
+var path = require('path')
+var trumpet = require('trumpet')
+var isObject = require('is-real-object')
+var escapeHtml = require('escape-html')
+var readSource = require('./lib/read-source')
+var inlineLink = require('./lib/inline-link')
+var encodeImage = require('./lib/encode-image')
 
-    if (!(opts.ignoreScripts || opts['ignore-scripts'])) {
-        tr.selectAll('script[src]', function (node) {
-            var file = fix(node.getAttribute('src'));
-            node.removeAttribute('src');
-            fs.createReadStream(file)
-                .pipe(node.createWriteStream())
-            ;
-        });
+module.exports = function inline (options) {
+  options = isObject(options) ? options : {}
+  options = mixin({
+    cwd: process.cwd(),
+    images: true,
+    imports: true,
+    scripts: true,
+    styles: true
+  }, options)
+
+  var tr = trumpet()
+
+  if (options.scripts) {
+    tr.selectAll('script[src]', function (node) {
+      var url = node.getAttribute('src')
+      node.removeAttribute('src')
+      readSource(url, options).pipe(node.createWriteStream())
+    })
+  }
+  if (options.styles || options.imports) {
+    tr.selectAll('link[href]', function (node) {
+      var rel = node.getAttribute('rel').toLowerCase()
+      if (rel === 'stylesheet' && options.styles) {
+        inlineLink(node, options, true)
+      }
+      if (rel === 'import' && options.imports) {
+        inlineLink(node, options, false)
+      }
+    })
+  }
+  if (options.images) {
+    tr.selectAll('img[src]', function (node) {
+      var url = node.getAttribute('src')
+      var ext = path.extname(url).replace(/^\./, '')
+      var w = node.createWriteStream({outer: true})
+      var attrs = node.getAttributes()
+
+      w.write('<img')
+      Object.keys(attrs).forEach(function (key) {
+        if (key === 'src') return
+        w.write(' ' + key + '="' + escapeHtml(attrs[key]) + '"')
+      })
+      w.write(' src="data:image/' + ext + ';base64,')
+
+      readSource(url, options).pipe(encodeImage()).pipe(w)
+    })
+  }
+  return tr
+}
+/**
+ * utils
+ */
+
+function mixin (target, obj) {
+  for (var key in obj) {
+    if (hasOwn(obj, key)) {
+      target[key] = obj[key]
     }
+  }
+  return target
+}
 
-    if (!(opts.ignoreImages || opts['ignore-images'])) {
-        tr.selectAll('img[src]', function (node) {
-            var file = fix(node.getAttribute('src'));
-            var w = node.createWriteStream({ outer: true });
-            var attrs = node.getAttributes();
-            w.write('<img');
-            Object.keys(attrs).forEach(function (key) {
-                if (key === 'src') return;
-                w.write(' ' + key + '="' + enc(attrs[key]) + '"');
-            });
-            var ext = path.extname(file).replace(/^\./, '');;
-            w.write(' src="data:image/' + ext + ';base64,');
-            fs.createReadStream(file).pipe(through(write, end));
-            
-            var bytes = 0, last = null;
-            
-            function write (buf, enc, next) {
-                if (last) {
-                    buf = Buffer.concat([ last, buf ]);
-                    last = null;
-                }
-                
-                var b;
-                if (buf.length % 3 === 0) {
-                    b = buf;
-                }
-                else {
-                    b = buf.slice(0, buf.length - buf.length % 3);
-                    last = buf.slice(buf.length - buf.length % 3);
-                }
-                w.write(b.toString('base64'));
-                
-                next();
-            }
-            function end () {
-                if (last) w.write(last.toString('base64'));
-                w.end('">');
-            }
-        });
-    }
-
-    if (!(opts.ignoreStyles || opts['ignore-styles'])) {
-        tr.selectAll('link[href]', function (node) {
-            var rel = node.getAttribute('rel').toLowerCase();
-            if (rel !== 'stylesheet') return;
-            var file = fix(node.getAttribute('href'));
-
-            var w = node.createWriteStream({ outer: true });
-            w.write('<style>');
-            var r = fs.createReadStream(file);
-            r.pipe(w, { end: false });
-            r.on('end', function () { w.end('</style>') });
-        });
-    }
-
-    return tr;
-
-    function fix (p) {
-        return path.resolve(basedir, path.relative('/', path.resolve('/', p)));
-    }
-    function enc (s) {
-        return s.replace(/"/g, '&#34;')
-            .replace(/>/g, '&gt;')
-            .replace(/</g, '&lt;')
-        ;
-    }
-};
+function hasOwn (obj, val) {
+  return Object.prototype.hasOwnProperty.call(obj, val)
+}
