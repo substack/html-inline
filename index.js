@@ -76,7 +76,11 @@ module.exports = function (opts) {
     return tr;
 
     function fix (p) {
-        return path.resolve(basedir, path.relative('/', path.resolve('/', p)));
+        if(path.isAbsolute(p)) {
+            return path.resolve(basedir, path.relative('/', p));
+        } else {
+            return path.resolve(basedir, p);
+        }
     }
     function enc (s) {
         return s.replace(/"/g, '&#34;')
