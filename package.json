@@ -7,10 +7,12 @@
     "html-inline": "bin/cmd.js"
   },
   "dependencies": {
+    "encode-image-stream": "^1.0.1",
     "escape-html": "^1.0.3",
-    "got": "^4.1.1",
-    "is-absolute-url": "^2.0.0",
+    "is-real-object": "^1.0.1",
     "minimist": "^1.2.0",
+    "read-source-stream": "^1.0.0",
+    "through2": "^2.0.0",
     "trumpet": "^1.7.1"
   },
   "devDependencies": {

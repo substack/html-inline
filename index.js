@@ -2,11 +2,12 @@
 
 var path = require('path')
 var trumpet = require('trumpet')
+var through2 = require('through2')
 var isObject = require('is-real-object')
 var escapeHtml = require('escape-html')
-var readSource = require('./lib/read-source')
+var readSource = require('read-source-stream')
 var inlineLink = require('./lib/inline-link')
-var encodeImage = require('./lib/encode-image')
+var encodeImage = require('encode-image-stream')
 
 module.exports = function inline (options) {
   options = isObject(options) ? options : {}
@@ -52,7 +53,15 @@ module.exports = function inline (options) {
       })
       w.write(' src="data:image/' + ext + ';base64,')
 
-      readSource(url, options).pipe(encodeImage()).pipe(w)
+      readSource(url, options).pipe(encodeImage())
+        .pipe(through2(function (chunk, enc, next) {
+          this.push(chunk)
+          next()
+        }, function (cb) {
+          this.push('">')
+          cb()
+        }))
+        .pipe(w)
     })
   }
   return tr
