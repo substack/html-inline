@@ -7,6 +7,7 @@ var expected = fs.readFileSync(__dirname + '/files/expected.html', 'utf8');
 var expectedIgnoreImages = fs.readFileSync(__dirname + '/files/expected-ignore-images.html', 'utf8');
 var expectedIgnoreScripts = fs.readFileSync(__dirname + '/files/expected-ignore-scripts.html', 'utf8');
 var expectedIgnoreStyles = fs.readFileSync(__dirname + '/files/expected-ignore-styles.html', 'utf8');
+var expectedIgnoreLinks = fs.readFileSync(__dirname + '/files/expected-ignore-links.html', 'utf8');
 
 test('inline', function (t) {
     t.plan(1);
@@ -41,6 +42,15 @@ test('ignore-styles', function (t) {
     var r = fs.createReadStream(__dirname + '/files/index.html');
     r.pipe(inline).pipe(concat(function (body) {
         t.equal(body.toString('utf8'), expectedIgnoreStyles);
+    }));
+});
+
+test('ignore-links', function (t) {
+    t.plan(1);
+    var inline = inliner({ basedir: __dirname + '/files', ignoreLinks: true });
+    var r = fs.createReadStream(__dirname + '/files/index.html');
+    r.pipe(inline).pipe(concat(function (body) {
+        t.equal(body.toString('utf8'), expectedIgnoreLinks);
     }));
 });
 
