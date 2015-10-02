@@ -7,6 +7,8 @@ html-inline {-i INFILE -o OUTFILE -b BASEDIR}
   -o File to write. Default: STDOUT.
   -b Directory to resolve paths from. Default: $PWD.
 
-  --ignore-images Don't inline images. Default: false
+  --ignore-images  Don't inline images. Default: false
   --ignore-scripts Don't inline JavaScript. Default: false
-  --ignore-styles Don't inline CSS. Default: false
+  --ignore-styles  Don't inline CSS. Default: false
+  --ignore-links   Don't inline <link> tags. Default: false
+

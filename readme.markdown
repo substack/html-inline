@@ -54,9 +54,11 @@ html-inline {-i INFILE -o OUTFILE -b BASEDIR}
   -o File to write. Default: STDOUT.
   -b Directory to resolve paths from. Default: $PWD.
 
-  --ignore-images Don't inline images. Default: false
+  --ignore-images  Don't inline images. Default: false
   --ignore-scripts Don't inline JavaScript. Default: false
-  --ignore-styles Don't inline CSS. Default: false
+  --ignore-styles  Don't inline CSS. Default: false
+  --ignore-links   Don't inline <link> tags. Default: false
+
 ```
 
 # methods
@@ -73,7 +75,12 @@ with inline assets as output.
 Paths to scripts, stylesheets, and images are
 resolved relative to `opts.basedir`.
 
-You can disable asset inlining by passing `true` for `opts.ignoreImages`, `opts.ignoreScripts` or `opts.ignoreStyles`.
+You can disable asset inlining by passing `true` for:
+
+* `opts.ignoreImages`
+* `opts.ignoreScripts`
+* `opts.ignoreStyles`
+* `opts.ignoreLinks`
 
 # install
 
