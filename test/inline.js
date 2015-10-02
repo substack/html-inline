@@ -50,7 +50,9 @@ test('ignore-all', function (t) {
         basedir: __dirname + '/files',
         ignoreImages: true,
         ignoreScripts: true,
-        ignoreStyles: true });
+        ignoreStyles: true,
+        ignoreLinks: true
+    });
     var r = fs.createReadStream(__dirname + '/files/index.html');
     r.pipe(inline).pipe(concat(function (body) {
         t.equal(body.toString('utf8'), initial);
