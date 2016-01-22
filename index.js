@@ -46,7 +46,7 @@ module.exports = function (opts) {
     return tr;
 
     function fix (p) {
-        if(path.isAbsolute(p)) {
+        if(isAbsolutePath(p)) {
             return path.resolve(basedir, path.relative('/', p));
         } else {
             return path.resolve(basedir, p);
@@ -105,5 +105,9 @@ module.exports = function (opts) {
             if (last) w.write(last.toString('base64'));
             w.end('">');
         }
+    }
+
+    function isAbsolutePath (p) {
+        return path.resolve(basedir, p) === p;
     }
 };
