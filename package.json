@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "minimist": "~1.1.0",
+    "path-is-absolute": "^1.0.0",
     "through2": "~0.6.3",
     "trumpet": "~1.7.0"
   },

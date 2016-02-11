@@ -2,6 +2,7 @@ var trumpet = require('trumpet');
 var through = require('through2');
 var fs = require('fs');
 var path = require('path');
+var pathIsAbsolute = require('path-is-absolute')
 
 module.exports = function (opts) {
     if (!opts) opts = {};
@@ -46,7 +47,7 @@ module.exports = function (opts) {
     return tr;
 
     function fix (p) {
-        if(path.isAbsolute(p)) {
+        if(pathIsAbsolute(p)) {
             return path.resolve(basedir, path.relative('/', p));
         } else {
             return path.resolve(basedir, p);
@@ -80,15 +81,15 @@ module.exports = function (opts) {
         }[ext] || 'image/png'
         w.write(' ' + name + '="data:' + type + ';base64,');
         fs.createReadStream(file).pipe(through(write, end));
-        
+
         var bytes = 0, last = null;
-        
+
         function write (buf, enc, next) {
             if (last) {
                 buf = Buffer.concat([ last, buf ]);
                 last = null;
             }
-            
+
             var b;
             if (buf.length % 3 === 0) {
                 b = buf;
@@ -98,7 +99,7 @@ module.exports = function (opts) {
                 last = buf.slice(buf.length - buf.length % 3);
             }
             w.write(b.toString('base64'));
-            
+
             next();
         }
         function end () {
