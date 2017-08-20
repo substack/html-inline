@@ -6,6 +6,7 @@ var path = require('path');
 module.exports = function (opts) {
     if (!opts) opts = {};
     var basedir = opts.basedir || process.cwd();
+    var reldir = opts.reldir || basedir;
     var tr = trumpet();
 
     if (!(opts.ignoreScripts || opts['ignore-scripts'])) {
@@ -49,7 +50,7 @@ module.exports = function (opts) {
         if(path.isAbsolute(p)) {
             return path.resolve(basedir, path.relative('/', p));
         } else {
-            return path.resolve(basedir, p);
+            return path.resolve(reldir, p);
         }
     }
     function enc (s) {
