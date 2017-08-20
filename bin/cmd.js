@@ -7,7 +7,7 @@ var minimist = require('minimist');
 
 var argv = minimist(process.argv.slice(2), {
     alias: {
-        i: 'infile', o: 'outfile', b: 'basedir', h: 'help',
+        i: 'infile', o: 'outfile', b: 'basedir', h: 'help', r: 'reldir',
         ignoreImages: 'ignore-images',
         ignoreScripts: 'ignore-scripts',
         ignoreStyles: 'ignore-styles',
