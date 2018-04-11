@@ -42,6 +42,21 @@ module.exports = function (opts) {
             r.on('end', function () { w.end('</style>') });
         });
     }
+    if (!(opts.ignoreAmp || opts['ignore-amp'])) {
+        tr.selectAll('style[href]', function (node) {
+            var amp = node.getAttribute('amp-custom')
+            if (rel !== 'stylesheet') {
+                consolr.error("amp tag is invalid")
+                return;
+            };
+            var file = fix(node.getAttribute('href'));
+            var w = node.createWriteStream({ outer: true });
+            w.write('<style amp-custom>');
+            var r = fs.createReadStream(file);
+            r.pipe(w, { end: false });
+            r.on('end', function () { w.end('</style>') });
+        });
+    }
 
     return tr;
 
