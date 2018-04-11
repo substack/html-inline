@@ -20,9 +20,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:soy-curd/html-inline.git"
+    "url": "git@github.com:soy-curd/html-inline-amp.git"
   },
-  "homepage": "https://github.com/soy-curd/html-inline",
+  "homepage": "https://github.com/soy-curd/html-inline-amp",
   "keywords": [
     "html",
     "inline",
