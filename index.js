@@ -45,8 +45,8 @@ module.exports = function (opts) {
     if (!(opts.ignoreAmp || opts['ignore-amp'])) {
         tr.selectAll('style[href]', function (node) {
             var amp = node.getAttribute('amp-custom')
-            if (rel !== 'stylesheet') {
-                consolr.error("amp tag is invalid")
+            if (!amp) {
+                console.error('amp tag is invalid');
                 return;
             };
             var file = fix(node.getAttribute('href'));
