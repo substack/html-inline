@@ -1,6 +1,7 @@
-# html-inline
+# html-inline-amp
 
-inline javascript, stylesheets, and images from an html page
+inline javascript, stylesheets, and images from an html page and amp page
+(forked from https://github.com/substack/html-inline)
 
 [![build status](https://secure.travis-ci.org/substack/html-inline.png)](http://travis-ci.org/substack/html-inline)
 
