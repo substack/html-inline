@@ -4,6 +4,7 @@ var fs = require('fs');
 var concat = require('concat-stream');
 var initial = fs.readFileSync(__dirname + '/files/index.html', 'utf8');
 var expected = fs.readFileSync(__dirname + '/files/expected.html', 'utf8');
+var expectedAmp = fs.readFileSync(__dirname + '/files/expected-amp.html', 'utf8');
 var expectedIgnoreImages = fs.readFileSync(__dirname + '/files/expected-ignore-images.html', 'utf8');
 var expectedIgnoreScripts = fs.readFileSync(__dirname + '/files/expected-ignore-scripts.html', 'utf8');
 var expectedIgnoreStyles = fs.readFileSync(__dirname + '/files/expected-ignore-styles.html', 'utf8');
@@ -16,6 +17,15 @@ test('inline', function (t) {
     r.pipe(inline).pipe(concat(function (body) {
         t.equal(body.toString('utf8'), expected);
     }));
+});
+
+test('inline-amp', function (t) {
+  t.plan(1);
+  var inline = inliner({ basedir: __dirname + '/files' });
+  var r = fs.createReadStream(__dirname + '/files/index-amp.html');
+  r.pipe(inline).pipe(concat(function (body) {
+      t.equal(body.toString('utf8'), expectedAmp);
+  }));
 });
 
 test('ignore-images', function (t) {
