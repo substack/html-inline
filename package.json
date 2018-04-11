@@ -1,7 +1,7 @@
 {
-  "name": "html-inline",
-  "version": "1.2.0",
-  "description": "inline javascript, stylehseets, and images from an html page",
+  "name": "html-inline-amp",
+  "version": "1.2.1",
+  "description": "inline javascript, stylehseets, and images from an html page for amp",
   "main": "index.js",
   "bin": {
     "html-inline": "bin/cmd.js"
@@ -20,18 +20,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/substack/html-inline.git"
+    "url": "git@github.com:soy-curd/html-inline-amp.git"
   },
-  "homepage": "https://github.com/substack/html-inline",
+  "homepage": "https://github.com/soy-curd/html-inline-amp",
   "keywords": [
     "html",
     "inline",
     "asset"
   ],
   "author": {
-    "name": "James Halliday",
-    "email": "mail@substack.net",
-    "url": "http://substack.net"
+    "name": "Soy Curd",
+    "email": "soycurd1@gmail.com",
+    "url": "http://soy-curd.hatenablog.com"
   },
   "license": "MIT"
 }

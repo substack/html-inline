@@ -1,6 +1,7 @@
-# html-inline
+# html-inline-amp
 
-inline javascript, stylesheets, and images from an html page
+inline javascript, stylesheets, and images from an html page and amp page
+(forked from https://github.com/substack/html-inline)
 
 [![build status](https://secure.travis-ci.org/substack/html-inline.png)](http://travis-ci.org/substack/html-inline)
 
@@ -58,6 +59,7 @@ html-inline {-i INFILE -o OUTFILE -b BASEDIR}
   --ignore-scripts Don't inline JavaScript. Default: false
   --ignore-styles  Don't inline CSS. Default: false
   --ignore-links   Don't inline <link> tags. Default: false
+  --ignore-amp     Don't inline <style amp-custom> tags. Default: false
 
 ```
 
@@ -81,6 +83,7 @@ You can disable asset inlining by passing `true` for:
 * `opts.ignoreScripts`
 * `opts.ignoreStyles`
 * `opts.ignoreLinks`
+* `opts.ignoreAmp`
 
 # install
 
