@@ -10,7 +10,11 @@ module.exports = function (opts) {
 
     if (!(opts.ignoreScripts || opts['ignore-scripts'])) {
         tr.selectAll('script[src]', function (node) {
-            var file = fix(node.getAttribute('src'));
+            // Ignore remote src
+            var src = node.getAttribute('src');
+            if (isRemote(src)) return;
+
+            var file = fix(src);
             node.removeAttribute('src');
             fs.createReadStream(file)
                 .pipe(node.createWriteStream())
@@ -33,7 +37,12 @@ module.exports = function (opts) {
         tr.selectAll('link[href]', function (node) {
             var rel = node.getAttribute('rel').toLowerCase();
             if (rel !== 'stylesheet') return;
-            var file = fix(node.getAttribute('href'));
+
+            // Ignore remote href
+            var href = node.getAttribute('href');
+            if (isRemote(href)) return;
+
+            var file = fix(href);
 
             var w = node.createWriteStream({ outer: true });
             w.write('<style>');
@@ -58,9 +67,12 @@ module.exports = function (opts) {
             .replace(/</g, '&lt;')
         ;
     }
+    function isRemote (path) {
+      return /^https?:/.test(path);
+    }
     function inline64 (node, name) {
         var href = node.getAttribute(name);
-        if (/^data:/.test(href)) return;
+        if (/^data:/.test(href) || isRemote(href)) return;
         var file = fix(href);
         var w = node.createWriteStream({ outer: true });
         var attrs = node.getAttributes();
