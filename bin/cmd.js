@@ -11,7 +11,8 @@ var argv = minimist(process.argv.slice(2), {
         ignoreImages: 'ignore-images',
         ignoreScripts: 'ignore-scripts',
         ignoreStyles: 'ignore-styles',
-        ignoreLinks: 'ignore-links'
+        ignoreLinks: 'ignore-links',
+        ignoreExternal: 'ignore-external'
     },
     default: { outfile: '-' }
 });
