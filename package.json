@@ -7,7 +7,7 @@
     "html-inline": "bin/cmd.js"
   },
   "dependencies": {
-    "minimist": "~1.1.0",
+    "minimist": "~1.2.5",
     "through2": "~0.6.3",
     "trumpet": "~1.7.0"
   },
